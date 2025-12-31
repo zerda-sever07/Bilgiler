@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PersonsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employe" Relationship="Self.FK__Employe__CityId__3B75D760" FromRole="City" ToRole="Employe" />
+    <NavigationProperty Name="Town" Relationship="Self.FK__Town__CityId__38996AB5" FromRole="City" ToRole="Town" />
+  </EntityType>
+  <EntityType Name="Employe">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Eposta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="TownId" Type="Int32" />
+    <Property Name="Detail" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Employe__CityId__3B75D760" FromRole="Employe" ToRole="City" />
+    <NavigationProperty Name="Town" Relationship="Self.FK__Employe__TownId__3C69FB99" FromRole="Employe" ToRole="Town" />
+  </EntityType>
+  <EntityType Name="Town">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="TownName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Town__CityId__38996AB5" FromRole="Town" ToRole="City" />
+    <NavigationProperty Name="Employe" Relationship="Self.FK__Employe__TownId__3C69FB99" FromRole="Town" ToRole="Employe" />
+  </EntityType>
+  <Association Name="FK__Employe__CityId__3B75D760">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employe">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Town__CityId__38996AB5">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Town" Type="Self.Town" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Town">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employe__TownId__3C69FB99">
+    <End Role="Town" Type="Self.Town" Multiplicity="0..1" />
+    <End Role="Employe" Type="Self.Employe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Town">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employe">
+        <PropertyRef Name="TownId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PersonsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="Self.City" />
+    <EntitySet Name="Employe" EntityType="Self.Employe" />
+    <EntitySet Name="Town" EntityType="Self.Town" />
+    <AssociationSet Name="FK__Employe__CityId__3B75D760" Association="Self.FK__Employe__CityId__3B75D760">
+      <End Role="City" EntitySet="City" />
+      <End Role="Employe" EntitySet="Employe" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Town__CityId__38996AB5" Association="Self.FK__Town__CityId__38996AB5">
+      <End Role="City" EntitySet="City" />
+      <End Role="Town" EntitySet="Town" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employe__TownId__3C69FB99" Association="Self.FK__Employe__TownId__3C69FB99">
+      <End Role="Town" EntitySet="Town" />
+      <End Role="Employe" EntitySet="Employe" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
